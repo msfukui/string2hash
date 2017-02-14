@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'string2hash'
+require 'json'
+
+puts JSON.pretty_generate(STDIN.read.to_h)
