@@ -1,6 +1,6 @@
 # String2Hash
 
-This class converts Ruby's Hash String to Ruby's Hash.
+This class extends Ruby 's String class and provides the ability to convert Ruby' s Hash string to Hash.
 
 ## Usage
 
