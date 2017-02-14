@@ -6,10 +6,16 @@ describe String2hash do
   end
 
   describe 'String#to_hash' do
-    let(:empty_string) { '' }
+    it 'returns an empty Hash value' do
+      expect(''.to_h).to eq({})
+    end
 
     it 'returns an empty Hash value' do
-      expect(empty_string.to_h).to eq({})
+      expect('{}'.to_h).to eq({})
+    end
+
+    it 'returns an simple Hash value' do
+      expect('{:a=>1, :b=>"c"}'.to_h).to eq(a: 1, b: 'c')
     end
   end
 end

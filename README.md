@@ -4,7 +4,7 @@ This class extends Ruby 's String class and provides the ability to convert Ruby
 
 ## Usage
 
-```ruby
+```sh
 $ cat h2j
 #!/usr/bin/env ruby
 
