@@ -1,23 +1,28 @@
 class String
   def to_h
-    r = {}
+    return {} if strip.empty?
 
-    return r if empty?
+    match_data = match(/\{([^\{]*?)\}/)
 
-    s = match(/\{([^\{]*?)\}/)[1]
+    return {} if match_data.nil?
 
-    return r if s.empty?
+    s = match_data[1]
 
-    s.strip.split(',').each do |item|
-      (key, value) = item.strip.split('=>')
+    return {} if s.empty?
 
-      r[hash_key(key)] = hash_value(value)
-    end
-
-    r
+    convert_to_hash(s)
   end
 
   private
+
+  def convert_to_hash(s)
+    r = {}
+    s.strip.split(',').each do |item|
+      (key, value) = item.strip.split('=>')
+      r[hash_key(key)] = hash_value(value)
+    end
+    r
+  end
 
   def hash_key(s)
     return s[1..-1].to_sym if s =~ /^:/

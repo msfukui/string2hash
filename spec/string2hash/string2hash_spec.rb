@@ -11,11 +11,21 @@ describe String2hash do
     end
 
     it 'returns an empty Hash value' do
+      expect(" 　\n".to_h).to eq({})
+    end
+
+    it 'returns an empty Hash value' do
       expect('{}'.to_h).to eq({})
     end
 
     it 'returns an simple Hash value' do
-      expect('{:a=>1, :b=>"c"}'.to_h).to eq(a: 1, b: 'c')
+      expect("\n {:a=>1, :b=>\"c\"}　".to_h).to eq(a: 1, b: 'c')
+    end
+
+    context 'Incomplete string' do
+      it 'returns empty Hash value' do
+        expect('{:a=>1, :b=>"c"'.to_h).to eq({})
+      end
     end
   end
 end
