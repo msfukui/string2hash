@@ -6,24 +6,24 @@ describe String2hash do
   end
 
   describe 'String#to_hash' do
-    it 'returns an empty Hash value' do
+    it 'returns an empty Hash' do
       expect(''.to_h).to eq({})
     end
 
-    it 'returns an empty Hash value' do
+    it 'returns an empty Hash' do
       expect(" 　\n".to_h).to eq({})
     end
 
-    it 'returns an empty Hash value' do
+    it 'returns an empty Hash' do
       expect('{}'.to_h).to eq({})
     end
 
-    it 'returns an simple Hash value' do
+    it 'returns an simple Hash' do
       expect("\n {:a=>1, :b=>\"c\"}　".to_h).to eq(a: 1, b: 'c')
     end
 
     context 'Incomplete string' do
-      it 'returns empty Hash value' do
+      it 'returns empty Hash' do
         expect('{:a=>1, :b=>"c"'.to_h).to eq({})
       end
     end
