@@ -11,7 +11,7 @@ describe String2hash do
     end
 
     it 'returns an empty Hash' do
-      expect(" 　\n".to_h).to eq({})
+      expect(" \n".to_h).to eq({})
     end
 
     it 'returns an empty Hash' do
@@ -19,7 +19,7 @@ describe String2hash do
     end
 
     it 'returns an simple Hash' do
-      expect("\n {:a=>1, :b=>\"c\"}　".to_h).to eq(a: 1, b: 'c')
+      expect("\n {:a=>1, :b=>\"c\"}  ".to_h).to eq(a: 1, b: 'c')
     end
 
     context 'Incomplete string' do
