@@ -6,7 +6,7 @@ class String
   private
 
   def convert_string_to_hash(s)
-    return {} if invalid_hash_string?(s)
+    return {} if hash_string_invalid?(s)
 
     r = {}
     hash_elements = pick_out_hash_elements(s)
@@ -20,15 +20,19 @@ class String
         r[hash_key(key)] = hash_value(value)
       end
     end
-
     r
   end
 
-  def invalid_hash_string?(s)
+  def hash_string_invalid?(s)
+    !hash_string_valid?(s)
+  end
+
+  def hash_string_valid?(s)
     s.strip!
-    return true if s.empty?
-    return true unless s =~ /^\{.*\}$/
-    false
+    return false if s.empty?
+    return false unless s =~ /^\{.*\}$/
+    return false unless s.count('{') == s.count('}')
+    true
   end
 
   def pick_out_hash_elements(s)

@@ -26,8 +26,12 @@ describe String2hash do
       expect('{:a=>1, :b=>"c", :d=>{:e=>2, :f=>"g"}}'.to_h).to eq(a: 1, b: 'c', d: { e: 2, f: 'g' })
     end
 
-    xit 'returns a nested Hash (double nested hash)' do
-      expect('{:a=>1, :b=>"c", :d=>{:e=>2, :f=>"g"}, :h=>{:i=>3, :j=>{:k=>4, :l=>"m"}}'.to_h).to eq(a: 1, b: 'c', d: { e: 2, f: 'g' }, h: {i: 3, j: { k: 4, l: 'm'}})
+    it 'returns a nested Hash (double nested hash)' do
+      expect('{:a=>1, :b=>"c", :d=>{:e=>2, :f=>{:g=>3, :h=>"i"}}}'.to_h).to eq(a: 1, b: 'c', d: { e: 2, f: { g: 3, h: 'i'}})
+    end
+
+    xit 'returns a nested Hash (nested hash rows)' do
+      expect('{:a=>1, :b=>"c", :d=>{:e=>2, :f=>"g"}, :h=>{:i=>3, :j=>{:k=>4, :l=>"m"}}}'.to_h).to eq(a: 1, b: 'c', d: { e: 2, f: 'g' }, h: {i: 3, j: { k: 4, l: 'm'}})
     end
 
     context 'Incomplete string' do
