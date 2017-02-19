@@ -1,41 +1,62 @@
 class String
   def to_h
-    return {} unless valid_hash_string(self)
-    s = pick_out_hash_element(self)
-    convert_string_to_hash(s)
+    convert_string_to_hash(self)
   end
 
   private
 
-  def valid_hash_string(s)
-    s.strip!
-    return false if s.empty?
-    return false if s.match(/^\{.*\}$/).nil?
-    true
-  end
-
-  def pick_out_hash_element(s)
-    return s.strip.slice(1..-2).strip unless s.strip.match(/^\{.*\}$/).nil?
-    s
-  end
-
   def convert_string_to_hash(s)
+    return {} if invalid_hash_string?(s)
+
     r = {}
-    s.strip.split(',').each do |item|
-      (key, value) = item.strip.split('=>')
-      r[hash_key(key.strip)] = hash_value(value.strip)
+    hash_elements = pick_out_hash_elements(s)
+    hash_elements.each_with_index do |item, i|
+      if include_hash_string?(item)
+        (key, value) = pick_out_key_value(hash_elements[i..-1].join(', '))
+        r[hash_key(key)] = convert_string_to_hash(value)
+        break
+      else
+        (key, value) = pick_out_key_value(item)
+        r[hash_key(key)] = hash_value(value)
+      end
     end
+
     r
   end
 
-  def hash_key(s)
-    return s[1..-1].to_sym if s =~ /^:/
-    return s[1..-1].slice(-1) if s =~ /^".*"$/
+  def invalid_hash_string?(s)
+    s.strip!
+    return true if s.empty?
+    return true unless s =~ /^\{.*\}$/
+    false
+  end
+
+  def pick_out_hash_elements(s)
+    s.strip!
+    if s =~ /^\{.*\}$/
+      elements = s[1..-2] if s =~ /^\{.*\}$/
+    else
+      elements = s
+    end
+    elements.split(/,(?!")/).map(&:strip)
+  end
+
+  def include_hash_string?(s)
+    s =~ /\{/
+  end
+
+  def pick_out_key_value(s)
+    s.split('=>', 2).map(&:strip)
+  end
+
+  def hash_key(key)
+    return key[1..-1].to_sym if key =~ /^:/
+    return key[1..-1].slice(-1) if key =~ /^".*"$/
     s
   end
 
-  def hash_value(s)
-    return s[1..-2] if s =~ /^".*"$/
-    s.to_i
+  def hash_value(value)
+    return value[1..-2] if value =~ /^".*"$/
+    value.to_i
   end
 end
