@@ -33,6 +33,6 @@ $ echo '{:a=>1, :b=>"c"}' | h2j
 
 * Between key and value are separated by '=>'.
 
-* Key is represented by a character string enclosed in a character string (Symbol) or "" beginning with ':'.
+* Key is represented by a character string enclosed in "" or a character string (Symbol) beginning with ':'.
 
-* Value is represented by a character string enclosed in a numeric string (numerical value) or "" which is not enclosed with a Hash character string or "".
+* Value is represented by a character string enclosed in "" or a numeric string (Float or Integer) or a character string (Symbol) beginning with ':' or another Hash character string.

@@ -53,14 +53,55 @@ class String
     s.split('=>', 2).map(&:strip)
   end
 
-  def hash_key(key)
-    return key[1..-1].to_sym if key =~ /^:/
-    return key[1..-1].slice(-1) if key =~ /^".*"$/
-    s
+  def hash_key(s)
+    return symbol(s) if symbol?(s)
+    string(s)
   end
 
-  def hash_value(value)
-    return value[1..-2] if value =~ /^".*"$/
-    value.to_i
+  def hash_value(s)
+    return integer(s) if integer?(s)
+    return float(s)   if float?(s)
+    return symbol(s)  if symbol?(s)
+    string(s)
+  end
+
+  def symbol?(s)
+    s =~ /^:/
+  end
+
+  def symbol_string(s)
+    str = s
+    str = s[1..-1] if symbol?(s)
+    str = string(str) if string?(str)
+    str
+  end
+
+  def symbol(s)
+    symbol_string(s).to_sym
+  end
+
+  def string?(s)
+    s =~ /^".*"$/
+  end
+
+  def string(s)
+    return s[1..-2] if string?(s)
+    return s
+  end
+
+  def integer?(s)
+    s =~ /^[1-9|\-]+[0-9]*$/
+  end
+
+  def float?(s)
+    s =~ /^[1-9|\-]+[0-9|\.]*$/
+  end
+
+  def integer(s)
+    s.to_i
+  end
+
+  def float(s)
+    s.to_f
   end
 end

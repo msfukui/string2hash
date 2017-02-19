@@ -22,6 +22,26 @@ describe String2hash do
       expect("\n {:a=>1, :b=>\"c\"}  ".to_h).to eq(a: 1, b: 'c')
     end
 
+    it 'returns a simple Hash (nestless hash, key is String)' do
+      expect('{"a-1"=>1, "b-2"=>"c"}'.to_h).to eq('a-1'=>1, 'b-2'=>'c')
+    end
+
+    it 'returns a simple Hash (nestless hash, key is String Symbol)' do
+      expect('{:"a-1"=>1, :"b-2"=>"c"}'.to_h).to eq('a-1': 1, 'b-2': 'c')
+    end
+
+    it 'returns a simple Hash (nestless hash, value is Float)' do
+      expect('{:a=>1.1, :b=>-0.0012}'.to_h).to eq(a: 1.1, b: -0.0012)
+    end
+
+    it 'returns a simple Hash (nestless hash, value is Integer)' do
+      expect('{:a=>1, :b=>-2}'.to_h).to eq(a: 1, b: -2)
+    end
+
+    it 'returns a simple Hash (nestless hash, value is Symbol)' do
+      expect('{:a=>:c, :b=>:"d-2"}'.to_h).to eq(a: :c, b: :'d-2')
+    end
+
     it 'returns a nested Hash (single nested hash)' do
       expect('{:a=>1, :b=>"c", :d=>{:e=>2, :f=>"g"}}'.to_h).to eq(a: 1, b: 'c', d: { e: 2, f: 'g' })
     end
